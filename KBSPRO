@@ -1,57 +1,49 @@
-# ====== تثبيت المكتبات ======
+
 !pip install experta==1.9.4 -q
 
-# ====== إصلاح المكتبة ======
 import collections
 if not hasattr(collections, 'Mapping'):
     collections.Mapping = collections.abc.Mapping
 
-# ====== استيراد المكتبات ======
 from experta import *
 
-# ====== تعريف الحقائق ======
 class Speed(Fact):
-    """سرعة اللاعب (0-100)"""
+ 
     pass
 
 class Shooting(Fact):
-    """قوة التسديد (0-100)"""
+
     pass
 
 class Passing(Fact):
-    """قدرة التمرير (0-100)"""
+   
     pass
 
 class Dribbling(Fact):
-    """المراوغة (0-100)"""
+   
     pass
 
 class Defense(Fact):
-    """الدفاع (0-100)"""
+ 
     pass
 
 class Physical(Fact):
-    """القوة البدنية (0-100)"""
+    
     pass
 
 class Intelligence(Fact):
-    """الذكاء التكتيكي (0-100)"""
+   
     pass
 
 class Heading(Fact):
-    """الرأسيات (0-100)"""
+
     pass
 
-# ====== النظام الخبير ======
+
 class PositionExpert(KnowledgeEngine):
-    """
-    نظام خبير لتحديد المراكز المناسبة للاعب
-    """
-    
-    # تخزين المراكز المناسبة
+ 
     positions = []
     
-    # قاعدة: حارس مرمى
     @Rule(
         AND(
             Defense(value=P(lambda x: x >= 85)),
@@ -63,7 +55,6 @@ class PositionExpert(KnowledgeEngine):
     def goalkeeper(self):
         self.positions.append("حارس مرمى")
     
-    # قاعدة: ظهير
     @Rule(
         AND(
             Speed(value=P(lambda x: x >= 80)),
@@ -75,7 +66,6 @@ class PositionExpert(KnowledgeEngine):
     def fullback(self):
         self.positions.append("ظهير")
     
-    # قاعدة: قلب دفاع
     @Rule(
         AND(
             Defense(value=P(lambda x: x >= 85)),
@@ -87,7 +77,6 @@ class PositionExpert(KnowledgeEngine):
     def centerback(self):
         self.positions.append("قلب دفاع")
     
-    # قاعدة: وسط
     @Rule(
         AND(
             Passing(value=P(lambda x: x >= 80)),
@@ -99,7 +88,6 @@ class PositionExpert(KnowledgeEngine):
     def midfielder(self):
         self.positions.append("وسط")
     
-    # قاعدة: وسط مهاجم
     @Rule(
         AND(
             Dribbling(value=P(lambda x: x >= 80)),
@@ -111,7 +99,6 @@ class PositionExpert(KnowledgeEngine):
     def attacking_midfielder(self):
         self.positions.append("وسط مهاجم")
     
-    # قاعدة: وسط مدافع
     @Rule(
         AND(
             Defense(value=P(lambda x: x >= 80)),
@@ -123,7 +110,6 @@ class PositionExpert(KnowledgeEngine):
     def defensive_midfielder(self):
         self.positions.append("وسط مدافع")
     
-    # قاعدة: مهاجم جناح
     @Rule(
         AND(
             Speed(value=P(lambda x: x >= 85)),
@@ -135,7 +121,6 @@ class PositionExpert(KnowledgeEngine):
     def winger(self):
         self.positions.append("مهاجم جناح")
     
-    # قاعدة: مهاجم صريح
     @Rule(
         AND(
             Shooting(value=P(lambda x: x >= 85)),
@@ -147,7 +132,6 @@ class PositionExpert(KnowledgeEngine):
     def striker(self):
         self.positions.append("مهاجم صريح")
     
-    # قاعدة: صانع ألعاب
     @Rule(
         AND(
             Passing(value=P(lambda x: x >= 85)),
@@ -159,7 +143,6 @@ class PositionExpert(KnowledgeEngine):
     def playmaker(self):
         self.positions.append("صانع ألعاب")
     
-    # قاعدة لعرض النتائج في النهاية
     @Rule(salience=-1000)
     def show_results(self):
         if self.positions:
@@ -170,10 +153,10 @@ class PositionExpert(KnowledgeEngine):
         else:
             print("\n❌ **لا توجد مراكز مناسبة**")
 
-# ====== الوظيفة الرئيسية ======
+
 def main():
   
-    print("\n📊 أدخل مهارات اللاعب (0-100):")
+    print("\n أدخل مهارات اللاعب (0-100):")
     
     skills = {}
     skill_list = [
@@ -196,19 +179,214 @@ def main():
                     skills[fact_class] = value
                     break
                 else:
-                    print("⚠️ أدخل قيمة بين 0 و 100")
+                    print(" أدخل قيمة بين 0 و 100")
             except ValueError:
-                print("⚠️ أدخل رقم صحيح")
+                print(" أدخل رقم صحيح")
+    
+   
+    
+    expert = PositionExpert()
+    expert.reset()
+!pip install experta==1.9.4 -q
+
+import collections
+if not hasattr(collections, 'Mapping'):
+    collections.Mapping = collections.abc.Mapping
+
+from experta import *
+
+class Speed(Fact):
+ 
+    pass
+
+class Shooting(Fact):
+
+    pass
+
+class Passing(Fact):
+   
+    pass
+
+class Dribbling(Fact):
+   
+    pass
+
+class Defense(Fact):
+ 
+    pass
+
+class Physical(Fact):
+    
+    pass
+
+class Intelligence(Fact):
+   
+    pass
+
+class Heading(Fact):
+
+    pass
+
+
+class PositionExpert(KnowledgeEngine):
+ 
+    positions = []
+    
+    @Rule(
+        AND(
+            Defense(value=P(lambda x: x >= 85)),
+            Intelligence(value=P(lambda x: x >= 80)),
+            Physical(value=P(lambda x: x >= 75)),
+            Passing(value=P(lambda x: x >= 60))
+        )
+    )
+    def goalkeeper(self):
+        self.positions.append("حارس مرمى")
+    
+    @Rule(
+        AND(
+            Speed(value=P(lambda x: x >= 80)),
+            Defense(value=P(lambda x: x >= 75)),
+            Passing(value=P(lambda x: x >= 70)),
+            Dribbling(value=P(lambda x: x >= 65))
+        )
+    )
+    def fullback(self):
+        self.positions.append("ظهير")
+    
+    @Rule(
+        AND(
+            Defense(value=P(lambda x: x >= 85)),
+            Physical(value=P(lambda x: x >= 85)),
+            Heading(value=P(lambda x: x >= 75)),
+            Intelligence(value=P(lambda x: x >= 75))
+        )
+    )
+    def centerback(self):
+        self.positions.append("قلب دفاع")
+    
+    @Rule(
+        AND(
+            Passing(value=P(lambda x: x >= 80)),
+            Intelligence(value=P(lambda x: x >= 80)),
+            Dribbling(value=P(lambda x: x >= 70)),
+            Physical(value=P(lambda x: x >= 70))
+        )
+    )
+    def midfielder(self):
+        self.positions.append("وسط")
+    
+    @Rule(
+        AND(
+            Dribbling(value=P(lambda x: x >= 80)),
+            Passing(value=P(lambda x: x >= 80)),
+            Shooting(value=P(lambda x: x >= 75)),
+            Speed(value=P(lambda x: x >= 75))
+        )
+    )
+    def attacking_midfielder(self):
+        self.positions.append("وسط مهاجم")
+    
+    @Rule(
+        AND(
+            Defense(value=P(lambda x: x >= 80)),
+            Physical(value=P(lambda x: x >= 85)),
+            Passing(value=P(lambda x: x >= 75)),
+            Intelligence(value=P(lambda x: x >= 75))
+        )
+    )
+    def defensive_midfielder(self):
+        self.positions.append("وسط مدافع")
+    
+    @Rule(
+        AND(
+            Speed(value=P(lambda x: x >= 85)),
+            Dribbling(value=P(lambda x: x >= 80)),
+            Shooting(value=P(lambda x: x >= 75)),
+            Passing(value=P(lambda x: x >= 70))
+        )
+    )
+    def winger(self):
+        self.positions.append("مهاجم جناح")
+    
+    @Rule(
+        AND(
+            Shooting(value=P(lambda x: x >= 85)),
+            Speed(value=P(lambda x: x >= 75)),
+            Heading(value=P(lambda x: x >= 70)),
+            Physical(value=P(lambda x: x >= 75))
+        )
+    )
+    def striker(self):
+        self.positions.append("مهاجم صريح")
+    
+    @Rule(
+        AND(
+            Passing(value=P(lambda x: x >= 85)),
+            Intelligence(value=P(lambda x: x >= 85)),
+            Dribbling(value=P(lambda x: x >= 75)),
+            Shooting(value=P(lambda x: x >= 70))
+        )
+    )
+    def playmaker(self):
+        self.positions.append("صانع ألعاب")
+    
+    @Rule(salience=-1000)
+    def show_results(self):
+        if self.positions:
+            print("\n✅ **المراكز المناسبة:**")
+            for i, pos in enumerate(self.positions, 1):
+                print(f"{i}. {pos}")
+            
+        else:
+            print("\n❌ **لا توجد مراكز مناسبة**")
+
+
+def main():
+  
+    print("\n أدخل مهارات اللاعب (0-100):")
+    
+    skills = {}
+    skill_list = [
+        ("السرعة", Speed),
+        ("قوة التسديد", Shooting),
+        ("قدرة التمرير", Passing),
+        ("المراوغة", Dribbling),
+        ("الدفاع", Defense),
+        ("القوة البدنية", Physical),
+        ("الذكاء التكتيكي", Intelligence),
+        ("الرأسيات", Heading)
+    ]
+    
+    for name, fact_class in skill_list:
+        while True:
+            try:
+                value = input(f"{name}: ")
+                value = int(value)
+                if 0 <= value <= 100:
+                    skills[fact_class] = value
+                    break
+                else:
+                    print(" أدخل قيمة بين 0 و 100")
+            except ValueError:
+                print(" أدخل رقم صحيح")
     
    
     
     expert = PositionExpert()
     expert.reset()
     
+    for fact_class, value in skills.items():
+        expert.declare(fact_class(value=value))
+    
+    expert.run()
+
+if __name__ == "__main__":
+    main()
+    
   
     
     expert.run()
 
-# ====== تشغيل النظام مباشرة ======
 if __name__ == "__main__":
     main()
